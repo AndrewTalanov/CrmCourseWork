@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CrmBL.Model
 {
-    internal class Check
+    public class Check
     {
         public int CheckId { get; set; }
         public int CustomerID { get; set; }

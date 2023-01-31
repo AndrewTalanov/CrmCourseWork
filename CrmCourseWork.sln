@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmBL", "CrmBL\CrmBL.csproj", "{B0FAF1D8-9EC0-4131-AB62-0771C13B0031}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrmUi", "CrmUi\CrmUi.csproj", "{99717197-238C-44D9-9EA7-CE28E7E99493}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B0FAF1D8-9EC0-4131-AB62-0771C13B0031}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0FAF1D8-9EC0-4131-AB62-0771C13B0031}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0FAF1D8-9EC0-4131-AB62-0771C13B0031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99717197-238C-44D9-9EA7-CE28E7E99493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99717197-238C-44D9-9EA7-CE28E7E99493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99717197-238C-44D9-9EA7-CE28E7E99493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99717197-238C-44D9-9EA7-CE28E7E99493}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
