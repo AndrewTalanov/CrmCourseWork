@@ -39,6 +39,11 @@ namespace CrmUi
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (Product == null)
+            {
+                Product = new Product();
+            }
+
             var p = Product ?? new Product();
 
             p.Name = textBox1.Text;

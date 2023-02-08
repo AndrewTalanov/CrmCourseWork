@@ -36,6 +36,12 @@ namespace CrmUi
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            if (Seller == null)
+            {
+                Seller = new Seller();
+            }
+
             var s = Seller ?? new Seller();
 
             s.Name = textBox1.Text;
