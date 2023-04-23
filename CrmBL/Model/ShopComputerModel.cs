@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CrmBL.Model
@@ -10,16 +11,25 @@ namespace CrmBL.Model
     {
         Generator Generator = new Generator();
         Random rnd = new Random();
+        List<Task> tasks = new List<Task> ();
+        CancellationTokenSource cancelTokenSource;
+        CancellationToken token;
         public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
         public List<Cart> Carts { get; set; } = new List<Cart>();
         public List<Check> Checks { get; set; } = new List<Check>();
         public List<Sell> Sell { get; set; } = new List<Sell>();
         public Queue<Seller> Sellers { get; set; } = new Queue<Seller>();
+
+        public int CustomerSpeed { get; set; } = 100;
+        public int CashDeskSpeed { get; set; } = 100;
         public ShopComputerModel()
         {
             var sellers = Generator.GetNewSellers(20);
             Generator.GetNewProducts(1000);
             Generator.GetNewCustomers(100);
+
+            cancelTokenSource = new CancellationTokenSource();
+            token = cancelTokenSource.Token;
 
             foreach (var seller in sellers)
             {
@@ -28,37 +38,59 @@ namespace CrmBL.Model
 
             for (int i = 0; i < 3; i++)
             {
-                CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue()));
+                CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue(), null));
             }
         }
 
         public void Start()
         {
-            var customers = Generator.GetNewCustomers(10);
 
-            var carts = new Queue<Cart>();
+            tasks.Add(new Task(() => CreateCarts(10, token)));
 
-            foreach (var customer in customers)
+            tasks.AddRange(CashDesks.Select(c => new Task(() => CashDeskWork(c, token))));
+            foreach (var task in tasks)
             {
-                var cart = new Cart(customer);
+                task.Start();
+            }
+        }
 
-                foreach (var prod in Generator.GetRandomProduct(10, 30))
+        public void Stop()
+        {   
+            cancelTokenSource.Cancel();   
+        }
+
+        private void CashDeskWork(CashDesk cashDesk, CancellationToken token)
+        {
+            while(!token.IsCancellationRequested)
+            {
+                if (cashDesk.Count > 0)
                 {
-                    cart.Add(prod);
+                    cashDesk.Dequeue();
+                    Thread.Sleep(CashDeskSpeed);
                 }
-                carts.Enqueue(cart);
             }
+        }
 
-            while (carts.Count > 0)
+        private void CreateCarts(int customerCounts, CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
             {
-                var cash = CashDesks[rnd.Next(CashDesks.Count - 1)];
-                cash.Enqueue(carts.Dequeue());
-            }
+                var customers = Generator.GetNewCustomers(customerCounts);
 
-            while (true)
-            {
-                var cash = CashDesks[rnd.Next(CashDesks.Count - 1)];
-                var money = cash.Dequeue();
+                foreach (var customer in customers)
+                {
+                    var cart = new Cart(customer);
+
+                    foreach (var product in Generator.GetRandomProduct(10, 30))
+                    {
+                        cart.Add(product);
+                    }
+
+                    var cash = CashDesks[rnd.Next(CashDesks.Count)];
+                    cash.Enqueue(cart);
+                }
+
+                Thread.Sleep(CustomerSpeed);
             }
         }
     }
