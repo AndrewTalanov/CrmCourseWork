@@ -26,19 +26,19 @@ namespace CrmUi
             LeaveCustomersCount = new Label();
 
             CashDeskName.AutoSize = true;
-            CashDeskName.Location = new System.Drawing.Point(x, y);
+            CashDeskName.Location = new System.Drawing.Point(x, y + 30);
             CashDeskName.Name = "label" + number;
             CashDeskName.Size = new System.Drawing.Size(35, 13);
             CashDeskName.TabIndex = 1;
             CashDeskName.Text = cashDesk.ToString();
 
-            Price.Location = new System.Drawing.Point(x + 70, y);
+            Price.Location = new System.Drawing.Point(x + 70, y + 30);
             Price.Name = "numericUpDown" + number;
             Price.Size = new System.Drawing.Size(120, 20);
             Price.TabIndex = number;
             Price.Maximum = 10000000000000000;
 
-            QueueLenght.Location = new System.Drawing.Point(x + 250, y);
+            QueueLenght.Location = new System.Drawing.Point(x + 250, y + 30);
             QueueLenght.Maximum = cashDesk.MaxQueueLenght;
             QueueLenght.Name = "progressBar" + number;
             QueueLenght.Size = new System.Drawing.Size(100, 23);
@@ -46,7 +46,7 @@ namespace CrmUi
             QueueLenght.Value = 0;
 
             LeaveCustomersCount.AutoSize = true;
-            LeaveCustomersCount.Location = new System.Drawing.Point(x + 400, y);
+            LeaveCustomersCount.Location = new System.Drawing.Point(x + 400, y + 30);
             LeaveCustomersCount.Name = "label2" + number;
             LeaveCustomersCount.Size = new System.Drawing.Size(35, 13);
             LeaveCustomersCount.TabIndex = 1;
